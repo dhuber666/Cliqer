@@ -2,20 +2,28 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+
+import { connect } from 'react-redux';
+import { fetchValues, increment } from './actions/index';
+
 class App extends Component {
+
+  componentDidMount() {
+    this.props.fetchValues();
+  }
+
   render() {
+
+    { }
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        {this.props.counter.count}
+        <button onClick={() => this.props.increment(this.props.counter.count)}>Increment </button>
       </div>
     );
   }
 }
 
-export default App;
+
+
+export default connect(state => ({ counter: state.counter }), { fetchValues, increment })(App);
